@@ -1,10 +1,8 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"description": "Reduce noise.",
-	"extends": [
-		"config:base",
-		"schedule:weekly",
-		":rebaseStalePrs",
-		":automergeBranch"
-	]
+	"extends": ["config:base", "schedule:daily", ":rebaseStalePrs"],
+	"automergeType": "branch",
+	"automerge": true,
+	"platformAutomerge": true
 }
