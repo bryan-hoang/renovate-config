@@ -1,7 +1,31 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:recommended"],
 	"automerge": true,
-	"automergeType": "branch",
-	"rebaseWhen": "behind-base-branch"
+	"cloneSubmodules": true,
+	"dependencyDashboard": true,
+	"extends": [
+		"config:recommended",
+		"docker:pinDigests",
+		"helpers:pinGitHubActionDigests",
+		":configMigration",
+		"abandonments:recommended"
+	],
+	"lockFileMaintenance": {
+		"enabled": true
+	},
+	"packageRules": [
+		{
+			"automerge": true,
+			"description": "Automerge non-major updates",
+			"matchUpdateTypes": ["minor", "patch", "digest", "lockFileMaintenance"]
+		},
+		{
+			"description": "Group lockfile maintenance updates",
+			"groupName": "lockfile maintenance",
+			"matchUpdateTypes": ["lockFileMaintenance"]
+		}
+	],
+	"prHourlyLimit": 0,
+	"schedule": ["* 18 * * *"],
+	"timezone": "Canada/Eastern"
 }
