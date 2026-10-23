@@ -2,13 +2,25 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"automerge": true,
 	"cloneSubmodules": true,
-	"dependencyDashboard": true,
+	"dependencyDashboard": false,
 	"extends": [
 		"config:recommended",
 		"docker:pinDigests",
 		"helpers:pinGitHubActionDigests",
 		":configMigration",
 		"abandonments:recommended"
+	],
+	"ignorePaths": [
+		"**/node_modules/**",
+		"**/bower_components/**",
+		"**/vendor/**",
+		"**/examples/**",
+		"**/__tests__/**",
+		"**/test/**",
+		"**/tests/**",
+		"**/__fixtures__/**",
+		"**/.mise/locks/**",
+		"**/.config/mise/locks/**"
 	],
 	"lockFileMaintenance": {
 		"enabled": true,
@@ -19,7 +31,19 @@
 		{
 			"automerge": true,
 			"description": "Automerge non-major updates",
-			"matchUpdateTypes": ["minor", "patch", "digest", "lockFileMaintenance"]
+			"matchUpdateTypes": [
+				"minor",
+				"patch",
+				"digest",
+				"pinDigest",
+				"lockFileMaintenance"
+			]
+		},
+		{
+			"description": "Group non-major updates into one PR per ecosystem; the rules below split them by manager",
+			"groupName": "non-major dependencies",
+			"groupSlug": "non-major",
+			"matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"]
 		},
 		{
 			"description": "Group lockfile maintenance updates",
@@ -28,6 +52,6 @@
 		}
 	],
 	"prHourlyLimit": 0,
-	"schedule": ["* 18 * * *"],
+	"schedule": ["* 18 * * 4"],
 	"timezone": "Canada/Eastern"
 }
